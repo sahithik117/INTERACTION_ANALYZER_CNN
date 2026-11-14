@@ -213,6 +213,7 @@ python scripts/analyze_structure.py 1EJO --export
    - Preserves SAbDab's official test partition isolated strictly by `ab_ag_cluster`.
    - Sub-partitions training candidates into `train` (~80%) and `validation` (~20%) using group-splitting on `ab_ag_cluster` with fixed seed 42.
    - Zero Ab-Ag cluster overlap and zero PDB overlap between test and train/val sets.
+   - The default dataset build targets a 10,000-sample training pool before split assignment, while still honoring the full metadata-driven leakage checks.
 4. **Reproducible Storage**:
    - Manifest: `data/processed/dataset_manifest.csv`
    - Rejections: `data/processed/rejected_samples.csv`

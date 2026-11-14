@@ -254,6 +254,10 @@
 
       const data = await response.json();
 
+      if (loadingPdbTarget) {
+        loadingPdbTarget.textContent = `${cleanPdb} · 10k dataset target`;
+      }
+
       if (!response.ok) {
         const errDetail = data.detail || {};
         const errType = typeof errDetail === "object" ? errDetail.error_type : "HttpError";

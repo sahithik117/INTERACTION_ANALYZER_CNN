@@ -45,6 +45,7 @@ def main():
     parser.add_argument("--patience", type=int, default=15, help="Early stopping patience")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
     parser.add_argument("--output-dir", type=str, default=None, help="Directory to save serialized model")
+    parser.add_argument("--dataset-target", type=int, default=10_000, help="Target dataset pool size for the 10k training-set workflow (default: 10,000)")
     parser.add_argument("--unseen-pdb", type=str, default="1A14", help="PDB ID for unseen structure evaluation (default: 1A14)")
     parser.add_argument("--mismatched-negatives", dest="mismatched_negatives", action="store_true", default=True, help="Generate balanced non-cognate negative pairs (Test 3 paradigm, default: True)")
     parser.add_argument("--no-mismatched-negatives", dest="mismatched_negatives", action="store_false", help="Disable non-cognate negative pair generation")
@@ -66,7 +67,10 @@ def main():
 
     # 2. Load Phase 4 splits
     print(f"\n2. LOADING PHASE 4 DATASET SPLITS (Source of Truth)...")
+    print(f"   Target dataset pool:   {args.dataset_target:,} samples (10k training-set workflow)")
     train_bundle, val_bundle, test_bundle, leakage_audit = load_all_splits()
+    print(f"   Loaded training pool:   {len(train_bundle):,} samples")
+    print(f"   Status:                {'within target' if len(train_bundle) <= args.dataset_target else 'above target'}")
 
     if args.mismatched_negatives:
         print("   [INFO] Generating within-split non-cognate negative pairs (Test 3)...")

@@ -2,7 +2,7 @@
 
 from collections import Counter
 from pathlib import Path
-from typing import Dict, List, Set, Tuple, Any
+from typing import Dict, List, Set, Tuple, Any, Optional
 import numpy as np
 
 from .models import DatasetSample, RejectedSample, SplitMetrics
@@ -26,6 +26,7 @@ def generate_dataset_report(
     lines.append("-" * 35)
     lines.append(f"  Total metadata rows in source:    {total_source_rows:,}")
     lines.append(f"  Total unique PDB IDs in source:   {total_source_pdbs:,}")
+    lines.append(f"  10k target dataset pool:          {10_000:,} samples")
     lines.append(f"  Samples evaluated in this run:    {len(accepted_samples) + len(rejected_samples):,}")
 
     # 2. Filtering & Rejection Summary

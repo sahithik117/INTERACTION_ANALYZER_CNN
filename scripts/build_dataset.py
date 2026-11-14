@@ -74,7 +74,12 @@ def main():
     parser.add_argument("--metadata", type=str, default=None, help="Path to abag_split.csv")
     parser.add_argument("--structures", type=str, default=None, help="Path to data/structures/")
     parser.add_argument("--output", type=str, default=None, help="Path to data/processed/")
-    parser.add_argument("--limit", type=int, default=None, help="Limit maximum samples to process")
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=10_000,
+        help="Limit maximum samples to process before splitting (default: 10,000)",
+    )
     parser.add_argument("--allow-download", action="store_true", help="Download missing structures from RCSB")
     parser.add_argument("--all-metadata", action="store_true", help="Process all metadata rows (disables cached-only)")
     parser.add_argument("--val-fraction", type=float, default=0.20, help="Fraction of train pool for validation")
@@ -94,7 +99,10 @@ def main():
     )
 
     cached_only = not args.all_metadata
-    print(f"Building dataset (cached_only={cached_only}, allow_download={args.allow_download}, limit={args.limit})...")
+    print(
+        f"Building dataset (cached_only={cached_only}, allow_download={args.allow_download}, "
+        f"target_training_pool={args.limit:,})..."
+    )
     accepted, rejected = builder.build_dataset(
         cached_only=cached_only,
         limit=args.limit,

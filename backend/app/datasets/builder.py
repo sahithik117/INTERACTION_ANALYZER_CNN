@@ -258,14 +258,14 @@ class DatasetBuilder:
         self,
         cached_only: bool = True,
         candidate_pdbs: Optional[Set[str]] = None,
-        limit: Optional[int] = None,
+        limit: Optional[int] = 10_000,
     ) -> Tuple[List[DatasetSample], List[RejectedSample]]:
         """Execute complete dataset build and write manifests.
 
         Args:
             cached_only: If True, only attempts to process structures cached in structures_dir.
             candidate_pdbs: Optional filter set of PDB IDs.
-            limit: Optional cap on processed samples.
+            limit: Optional cap on processed samples; defaults to a 10,000-sample training pool.
 
         Returns:
             Tuple of (accepted_samples, rejected_samples).
